@@ -17,10 +17,12 @@ protected:
 	static int** map;
 	int stateHorizontal;
 	int stateVertical;
+	int direction;
 
 public:
 
 	Figure(int* positionOnMap);
+	~Figure();
 
 	void setPosition(float* positionOnScene);
 	float* getPosition();

@@ -16,6 +16,7 @@ Ghost* ghosts[GHOSTS];
 
 void init()
 {
+	cout << "x";
 	GLfloat mat_ambient[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat light_position[] = { 0.0, 0.0, 10.0, 1.0 };
@@ -50,7 +51,7 @@ void reshape(GLsizei weight, GLsizei height)
 
 		gluLookAt(pacManPosition[Dimension(X)], CAMERA_Y, pacManPosition[Dimension(Z)] + CAMERA_Z,
 			pacManPosition[Dimension(X)], pacManPosition[Dimension(Y)], pacManPosition[Dimension(Z)],
-			0.0f, 1.0f, 0.0f);
+				0.0f, 1.0f, 0.0f);
 	}
 }
 
@@ -108,22 +109,34 @@ void initFigures()
 	positionOnMap[1] = 6;
 	pacMan = new PacMan(positionOnMap);
 
-	positionOnMap[0] = 22;
-	positionOnMap[1] = 6;
+	positionOnMap = new int[2];
+	positionOnMap[0] = 12;
+	positionOnMap[1] = 11;
 	ghosts[0] = new Ghost(positionOnMap);
 
-	positionOnMap[0] = 22;
-	positionOnMap[1] = 6;
+	positionOnMap = new int[2];
+	positionOnMap[0] = 12;
+	positionOnMap[1] = 13;
 	ghosts[1] = new Ghost(positionOnMap);
 
-	positionOnMap[0] = 22;
-	positionOnMap[1] = 6;
+	positionOnMap = new int[2];
+	positionOnMap[0] = 12;
+	positionOnMap[1] = 16;
 	ghosts[2] = new Ghost(positionOnMap);
 
-	positionOnMap[0] = 22;
-	positionOnMap[1] = 6;
+	positionOnMap = new int[2];
+	positionOnMap[0] = 13;
+	positionOnMap[1] = 13;
 	ghosts[3] = new Ghost(positionOnMap);
 }
+
+void deleteReferences()
+{
+	delete[] ghosts;
+	delete pacMan;
+	delete scene;
+}
+
 int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
@@ -143,5 +156,6 @@ int main(int argc, char** argv)
 	init();
 	glutMainLoop();
 
+	deleteReferences();
 	return 0;
 }

@@ -24,4 +24,12 @@ enum Dimension
 	Z=2
 };
 
+enum Direction
+{
+	FORWARD,
+	BACK,
+	RIGHT,
+	LEFT
+};
+
 #endif

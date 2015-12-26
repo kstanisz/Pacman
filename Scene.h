@@ -17,6 +17,7 @@ private:
 public:
 
 	Scene();
+	~Scene();
 
 	void displayLabirynth();
 	void readLabirynthFromFile();

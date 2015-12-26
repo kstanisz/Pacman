@@ -12,6 +12,14 @@ Scene::Scene()
 	readLabirynthFromFile();
 }
 
+Scene::~Scene()
+{
+	for (int i = 0; i < MAP_SIZE; i++)
+	{
+		delete[] labirynth[i];
+	}
+}
+
 void Scene::displayLabirynth()
 {
 	GLfloat wallDiffuse[] = { 0.0, 0.5, 0.25, 1.0 };
