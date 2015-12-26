@@ -10,6 +10,10 @@
 #define MAP_SIZE 28
 #define STEP 0.125f
 
+#define WALL_BRICK_SIZE 0.5f
+#define TRANSLATION_X -7.25f
+#define TRANSLATION_Z -13.75f
+
 enum Dimension
 {
 	X=0,

@@ -11,7 +11,7 @@ private:
 
 public:
 
-	Ghost(float* positionOnScene, int* positionOnMap) : Figure(positionOnScene, positionOnMap)
+	Ghost(int* positionOnMap) : Figure(positionOnMap)
 	{
 
 	}

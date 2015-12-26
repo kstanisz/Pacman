@@ -11,7 +11,7 @@ class Scene
 {
 private:
 
-    int** labirynth;
+	int** labirynth;
 
 public:
 
@@ -33,32 +33,32 @@ public:
 		GLfloat floorDiffuse[] = { 0.0, 2.5, 3.25, 1.0 };
 
 		glPushMatrix();
-			glTranslatef(-7.25, 0.0, -13.75);
+		glTranslatef(TRANSLATION_X, 0.0,TRANSLATION_Z);
 
-			for (int i = 0; i < MAP_SIZE; i++)
+		for (int i = 0; i < MAP_SIZE; i++)
+		{
+			for (int j = 0; j < MAP_SIZE; j++)
 			{
-				for (int j = 0; j < MAP_SIZE; j++)
+				if (labirynth[i][j] == 1)
 				{
-					if (labirynth[i][j]==1)
-					{
-						glPushMatrix();
-							glMaterialfv(GL_FRONT, GL_DIFFUSE, wallDiffuse);
-							glTranslatef(j*0.5, 0.0, i*0.5);
-							glutSolidCube(0.5);
-						glPopMatrix();
-					}
-					else
-					{
-
-					}
-
 					glPushMatrix();
-						glMaterialfv(GL_FRONT, GL_DIFFUSE, floorDiffuse);
-						glTranslatef(j*0.5, -0.25, i*0.5);
-						glutSolidCube(0.5);
+						glMaterialfv(GL_FRONT, GL_DIFFUSE, wallDiffuse);
+						glTranslatef(j*WALL_BRICK_SIZE, 0.0, i*WALL_BRICK_SIZE);
+						glutSolidCube(WALL_BRICK_SIZE);
 					glPopMatrix();
 				}
+				else
+				{
+
+				}
+
+				glPushMatrix();
+					glMaterialfv(GL_FRONT, GL_DIFFUSE, floorDiffuse);
+					glTranslatef(j*WALL_BRICK_SIZE, -0.25, i*WALL_BRICK_SIZE);
+				glutSolidCube(WALL_BRICK_SIZE);
+				glPopMatrix();
 			}
+		}
 		glPopMatrix();
 	}
 

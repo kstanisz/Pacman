@@ -19,12 +19,16 @@ protected:
 
 public:
 
-	Figure(float* positionOnScene, int* positionOnMap)
+	Figure(int* positionOnMap)
 	{
-		this->positionOnScene = positionOnScene;
 		this->positionOnMap = positionOnMap;
 		stateHorizontal = 0;
 		stateVertical = 0;
+
+		positionOnScene = new float[DIMENSIONS];
+		positionOnScene[Dimension(X)] = float(positionOnMap[1]) * WALL_BRICK_SIZE + TRANSLATION_X;
+		positionOnScene[Dimension(Y)] = float(0.25 / 2.0);
+		positionOnScene[Dimension(Z)] = float(positionOnMap[0]) * WALL_BRICK_SIZE + TRANSLATION_Z;
 	}
 
 	void setPosition(float* positionOnScene)
@@ -42,14 +46,14 @@ public:
 		if (stateHorizontal != 0)
 			return;
 
-		if ((stateVertical == 0 && map[positionOnMap[0]-1][positionOnMap[1]]==0) || stateVertical==1 || stateVertical==2)
+		if ((stateVertical == 0 && map[positionOnMap[0] - 1][positionOnMap[1]] == 0) || stateVertical == 1 || stateVertical == 2)
 		{
 			stateVertical++;
 			positionOnScene[Dimension(Z)] -= STEP;
 		}
 		else if (stateVertical == 3)
 		{
-			stateVertical=0;
+			stateVertical = 0;
 			positionOnMap[0]--;
 			positionOnScene[Dimension(Z)] -= STEP;
 		}
@@ -60,12 +64,12 @@ public:
 		if (stateHorizontal != 0)
 			return;
 
-		if (stateVertical>=1 && stateVertical<=3)
+		if (stateVertical >= 1 && stateVertical <= 3)
 		{
 			stateVertical--;
 			positionOnScene[Dimension(Z)] += STEP;
 		}
-		else if (stateVertical == 0 && map[positionOnMap[0] +1][positionOnMap[1]] == 0)
+		else if (stateVertical == 0 && map[positionOnMap[0] + 1][positionOnMap[1]] == 0)
 		{
 			stateVertical = 3;
 			positionOnMap[0]++;
@@ -78,7 +82,7 @@ public:
 		if (stateVertical != 0)
 			return;
 
-		if ((stateHorizontal == 0 && map[positionOnMap[0]][positionOnMap[1]+1] == 0) || stateHorizontal == 1 || stateHorizontal == 2)
+		if ((stateHorizontal == 0 && map[positionOnMap[0]][positionOnMap[1] + 1] == 0) || stateHorizontal == 1 || stateHorizontal == 2)
 		{
 			stateHorizontal++;
 			positionOnScene[Dimension(X)] += STEP;
@@ -101,7 +105,7 @@ public:
 			stateHorizontal--;
 			positionOnScene[Dimension(X)] -= STEP;
 		}
-		else if (stateHorizontal == 0 && map[positionOnMap[0]][positionOnMap[1]-1] == 0)
+		else if (stateHorizontal == 0 && map[positionOnMap[0]][positionOnMap[1] - 1] == 0)
 		{
 			stateHorizontal = 3;
 			positionOnMap[1]--;
