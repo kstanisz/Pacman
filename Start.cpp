@@ -16,7 +16,7 @@ Ghost* ghosts[GHOSTS];
 
 void init()
 {
-	cout << "x";
+	cout << "xs";
 	GLfloat mat_ambient[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat light_position[] = { 0.0, 0.0, 10.0, 1.0 };
@@ -77,26 +77,28 @@ void processMoveKeys(int key, int xx, int yy)
 	{
 
 	case GLUT_KEY_UP:
-		pacMan->moveForward();
+		pacMan->setCommand(Direction(FORWARD));
 		break;
 	case GLUT_KEY_DOWN:
-		pacMan->moveBack();
+		pacMan->setCommand(Direction(BACK));
 		break;
 	case GLUT_KEY_RIGHT:
-		pacMan->moveRight();
+		pacMan->setCommand(Direction(RIGHT));
 		break;
 	case GLUT_KEY_LEFT:
-		pacMan->moveLeft();
+		pacMan->setCommand(Direction(LEFT));
 		break;
 	}
 }
 
 void game()
 {
+	pacMan->moveControl();
 	for (int i = 0; i < GHOSTS; i++)
 	{
-		ghosts[i]->move();
+		ghosts[i]->randomMove();
 	}
+	Sleep(35);
 	reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	display();
 }

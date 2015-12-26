@@ -6,10 +6,14 @@ class PacMan : public Figure
 {
 private:
 
+	int command;
+
 public:
 
 	PacMan(int* positionOnMap);
 
+	void setCommand(int command);
+	void moveControl();
 	void display();
 };
 
