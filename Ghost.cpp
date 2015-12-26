@@ -22,7 +22,7 @@ void Ghost::display()
 	glPopMatrix();
 }
 
-void Ghost::move()
+void Ghost::randomMove()
 {
 	vector<Direction> possibleDirections;
 	srand(time(NULL));
@@ -40,11 +40,12 @@ void Ghost::move()
 				possibleDirections.push_back(Direction(LEFT));
 
 			int index = rand() % possibleDirections.size();
-
+			direction = possibleDirections[index];
+			move(possibleDirections[index]);
 		}
 		else
 		{
-			moveForward();
+			move(Direction(FORWARD));
 		}
 		break;
 	case Direction(BACK):
@@ -56,10 +57,14 @@ void Ghost::move()
 				possibleDirections.push_back(Direction(RIGHT));
 			if (map[positionOnMap[0]][positionOnMap[1] - 1] == 0)
 				possibleDirections.push_back(Direction(LEFT));
+			
+			int index = rand() % possibleDirections.size();
+			direction = possibleDirections[index];
+			move(possibleDirections[index]);
 		}
 		else
 		{
-			moveBack();
+			move(Direction(BACK));
 		}
 		break;
 	case Direction(RIGHT):
@@ -71,10 +76,14 @@ void Ghost::move()
 				possibleDirections.push_back(Direction(BACK));
 			if (map[positionOnMap[0]][positionOnMap[1] + 1] == 0)
 				possibleDirections.push_back(Direction(RIGHT));
+
+			int index = rand() % possibleDirections.size();
+			direction = possibleDirections[index];
+			move(possibleDirections[index]);
 		}
 		else
 		{
-			moveRight();
+			move(Direction(RIGHT));
 		}
 		break;
 	case Direction(LEFT):
@@ -86,10 +95,14 @@ void Ghost::move()
 				possibleDirections.push_back(Direction(BACK));
 			if (map[positionOnMap[0]][positionOnMap[1] - 1] == 0)
 				possibleDirections.push_back(Direction(LEFT));
+
+			int index = rand() % possibleDirections.size();
+			direction = possibleDirections[index];
+			move(possibleDirections[index]);
 		}
 		else
 		{
-			moveLeft();
+			move(Direction(LEFT));
 		}
 		break;
 	}

@@ -31,78 +31,88 @@ float* Figure::getPosition()
 	return positionOnScene;
 }
 
-void Figure::moveForward()
+void Figure::move(Direction direction)
 {
-	if (stateHorizontal != 0)
-		return;
+	switch (direction)
+	{
+	case Direction(FORWARD):
+	{
+		if (stateHorizontal != 0)
+			return;
 
-	if ((stateVertical == 0 && map[positionOnMap[0] - 1][positionOnMap[1]] == 0) || stateVertical == 1 || stateVertical == 2)
-	{
-		stateVertical++;
-		positionOnScene[Dimension(Z)] -= STEP;
+		if ((stateVertical == 0 && map[positionOnMap[0] - 1][positionOnMap[1]] == 0) || stateVertical == 1 || stateVertical == 2)
+		{
+			stateVertical++;
+			positionOnScene[Dimension(Z)] -= STEP;
+		}
+		else if (stateVertical == 3)
+		{
+			stateVertical = 0;
+			positionOnMap[0]--;
+			positionOnScene[Dimension(Z)] -= STEP;
+		}
+
+		break;
 	}
-	else if (stateVertical == 3)
+	case Direction(BACK):
 	{
-		stateVertical = 0;
-		positionOnMap[0]--;
-		positionOnScene[Dimension(Z)] -= STEP;
+		if(stateHorizontal != 0)
+			return;
+
+		if (stateVertical >= 1 && stateVertical <= 3)
+		{
+			stateVertical--;
+			positionOnScene[Dimension(Z)] += STEP;
+		}
+		else if (stateVertical == 0 && map[positionOnMap[0] + 1][positionOnMap[1]] == 0)
+		{
+			stateVertical = 3;
+			positionOnMap[0]++;
+			positionOnScene[Dimension(Z)] += STEP;
+		}
+
+		break;
+	}
+	case Direction(RIGHT):
+	{
+		if (stateVertical != 0)
+			return;
+
+		if ((stateHorizontal == 0 && map[positionOnMap[0]][positionOnMap[1] + 1] == 0) || stateHorizontal == 1 || stateHorizontal == 2)
+		{
+			stateHorizontal++;
+			positionOnScene[Dimension(X)] += STEP;
+		}
+		else if (stateHorizontal == 3)
+		{
+			stateHorizontal = 0;
+			positionOnMap[1]++;
+			positionOnScene[Dimension(X)] += STEP;
+		}
+
+		break;
+	}
+	case Direction(LEFT):
+	{
+		if (stateVertical != 0)
+			return;
+
+		if (stateHorizontal >= 1 && stateHorizontal <= 3)
+		{
+			stateHorizontal--;
+			positionOnScene[Dimension(X)] -= STEP;
+		}
+		else if (stateHorizontal == 0 && map[positionOnMap[0]][positionOnMap[1] - 1] == 0)
+		{
+			stateHorizontal = 3;
+			positionOnMap[1]--;
+			positionOnScene[Dimension(X)] -= STEP;
+		}
+
+		break;
+	}
 	}
 }
-
-void Figure::moveBack()
-{
-	if (stateHorizontal != 0)
-		return;
-
-	if (stateVertical >= 1 && stateVertical <= 3)
-	{
-		stateVertical--;
-		positionOnScene[Dimension(Z)] += STEP;
-	}
-	else if (stateVertical == 0 && map[positionOnMap[0] + 1][positionOnMap[1]] == 0)
-	{
-		stateVertical = 3;
-		positionOnMap[0]++;
-		positionOnScene[Dimension(Z)] += STEP;
-	}
-}
-
-void Figure::moveRight()
-{
-	if (stateVertical != 0)
-		return;
-
-	if ((stateHorizontal == 0 && map[positionOnMap[0]][positionOnMap[1] + 1] == 0) || stateHorizontal == 1 || stateHorizontal == 2)
-	{
-		stateHorizontal++;
-		positionOnScene[Dimension(X)] += STEP;
-	}
-	else if (stateHorizontal == 3)
-	{
-		stateHorizontal = 0;
-		positionOnMap[1]++;
-		positionOnScene[Dimension(X)] += STEP;
-	}
-}
-
-void Figure::moveLeft()
-{
-	if (stateVertical != 0)
-		return;
-
-	if (stateHorizontal >= 1 && stateHorizontal <= 3)
-	{
-		stateHorizontal--;
-		positionOnScene[Dimension(X)] -= STEP;
-	}
-	else if (stateHorizontal == 0 && map[positionOnMap[0]][positionOnMap[1] - 1] == 0)
-	{
-		stateHorizontal = 3;
-		positionOnMap[1]--;
-		positionOnScene[Dimension(X)] -= STEP;
-	}
-}
-
 
 int** Figure::createMap()
 {

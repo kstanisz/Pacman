@@ -27,10 +27,7 @@ public:
 	void setPosition(float* positionOnScene);
 	float* getPosition();
 	
-	void moveForward();
-	void moveBack();
-	void moveRight();
-	void moveLeft();
+	void move(Direction direction);
 
 	static int** createMap();
 
