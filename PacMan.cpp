@@ -2,16 +2,17 @@
 #include <iostream>
 #include <fstream>
 #include <GL/gl.h>
+#include "Config.h"
 #include "glut.h"
 #include "Figure.cpp"
 
-class PacMan: public Figure
+class PacMan : public Figure
 {
 private:
 
 public:
 
-	PacMan(float* positionOnScene, int* positionOnMap) : Figure(positionOnScene,positionOnMap)
+	PacMan(int* positionOnMap) : Figure(positionOnMap)
 	{
 	}
 
@@ -20,9 +21,9 @@ public:
 		GLfloat pacManDiffuse[] = { 0.9, 0.0, 0.9, 1.0 };
 
 		glPushMatrix();
-			glMaterialfv(GL_FRONT, GL_DIFFUSE, pacManDiffuse);
-			glTranslatef(positionOnScene[0], positionOnScene[1], positionOnScene[2]);
-			glutSolidSphere(0.25, 50, 50);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, pacManDiffuse);
+		glTranslatef(positionOnScene[Dimension(X)], positionOnScene[Dimension(Y)], positionOnScene[Dimension(Z)]);
+		glutSolidSphere(0.25, 50, 50);
 		glPopMatrix();
 	}
 };
