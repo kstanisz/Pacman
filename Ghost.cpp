@@ -1,23 +1,16 @@
-#include <windows.h>
-#include <iostream>
-#include <fstream>
-#include <GL/gl.h>
-#include "glut.h"
-#include "Figure.cpp"
+#include "Ghost.h"
 
-class Ghost : public Figure
+Ghost::Ghost(int* positionOnMap) : Figure(positionOnMap)
 {
-private:
 
-public:
+}
 
-	Ghost(int* positionOnMap) : Figure(positionOnMap)
-	{
+void Ghost::display()
+{
 
-	}
+}
 
-	void display()
-	{
+void Ghost::move()
+{
 
-	}
-};
+}

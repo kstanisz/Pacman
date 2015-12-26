@@ -1,29 +1,16 @@
-#include <windows.h>
-#include <iostream>
-#include <fstream>
-#include <GL/gl.h>
-#include "Config.h"
-#include "glut.h"
-#include "Figure.cpp"
+#include "PacMan.h"
 
-class PacMan : public Figure
+PacMan::PacMan(int* positionOnMap) : Figure(positionOnMap)
 {
-private:
+}
 
-public:
+void PacMan::display()
+{
+	GLfloat pacManDiffuse[] = { 0.9, 0.0, 0.9, 1.0 };
 
-	PacMan(int* positionOnMap) : Figure(positionOnMap)
-	{
-	}
-
-	void display()
-	{
-		GLfloat pacManDiffuse[] = { 0.9, 0.0, 0.9, 1.0 };
-
-		glPushMatrix();
+	glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, pacManDiffuse);
 		glTranslatef(positionOnScene[Dimension(X)], positionOnScene[Dimension(Y)], positionOnScene[Dimension(Z)]);
 		glutSolidSphere(0.25, 50, 50);
-		glPopMatrix();
-	}
-};
+	glPopMatrix();
+}

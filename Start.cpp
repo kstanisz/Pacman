@@ -3,14 +3,16 @@
 #include <GL/gl.h>
 #include "glut.h"
 #include "Config.h"
-#include "Scene.cpp"
-#include "PacMan.cpp"
+#include "Scene.h"
+#include "PacMan.h"
+#include "Ghost.h"
 
 using namespace std;
 
 static Scene* scene = new Scene();
 int** Figure::map = Figure::createMap();
 PacMan* pacMan;
+Ghost* ghosts[GHOSTS];
 
 void init()
 {
@@ -59,6 +61,10 @@ void display()
 	glMatrixMode(GL_MODELVIEW);
 	scene->displayLabirynth();
 	pacMan->display();
+	for (int i = 0; i < GHOSTS; i++)
+	{
+		ghosts[i]->display();
+	}
 	glFlush();
 	glutSwapBuffers();
 }
@@ -82,6 +88,14 @@ void processMoveKeys(int key, int xx, int yy)
 		pacMan->moveLeft();
 		break;
 	}
+}
+
+void game()
+{
+	for (int i = 0; i < GHOSTS; i++)
+	{
+		ghosts[i]->move();
+	}
 	reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	display();
 }
@@ -89,10 +103,26 @@ void processMoveKeys(int key, int xx, int yy)
 void initFigures()
 {
 	int* positionOnMap = new int[2];
+	
 	positionOnMap[0] = 22;
 	positionOnMap[1] = 6;
-
 	pacMan = new PacMan(positionOnMap);
+
+	positionOnMap[0] = 22;
+	positionOnMap[1] = 6;
+	ghosts[0] = new Ghost(positionOnMap);
+
+	positionOnMap[0] = 22;
+	positionOnMap[1] = 6;
+	ghosts[1] = new Ghost(positionOnMap);
+
+	positionOnMap[0] = 22;
+	positionOnMap[1] = 6;
+	ghosts[2] = new Ghost(positionOnMap);
+
+	positionOnMap[0] = 22;
+	positionOnMap[1] = 6;
+	ghosts[3] = new Ghost(positionOnMap);
 }
 int main(int argc, char** argv)
 {
@@ -106,7 +136,7 @@ int main(int argc, char** argv)
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 	glutSpecialFunc(processMoveKeys);
-	//glutIdleFunc(display);
+	glutIdleFunc(game);
 
 	initFigures();
 

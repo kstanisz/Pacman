@@ -1,7 +1,10 @@
-#pragma once
+#ifndef CONFIG_H
+#define CONFIG_H
 
 #define WINDOW_SIZE 500
 #define WINDOW_POSITION 0
+
+#define GHOSTS 4
 
 #define CAMERA_Y 3.0f
 #define CAMERA_Z 2.0f
@@ -20,3 +23,5 @@ enum Dimension
 	Y=1,
 	Z=2
 };
+
+#endif
