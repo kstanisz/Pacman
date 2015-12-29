@@ -12,11 +12,12 @@ using namespace std;
 static Scene* scene = new Scene();
 int** Figure::map = Figure::createMap();
 PacMan* pacMan;
-Ghost* ghosts[GHOSTS];
+Ghost** ghosts;
+bool life = true;
 
 void init()
 {
-	cout << "xs";
+	cout << "xdddd";
 	GLfloat mat_ambient[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat light_position[] = { 0.0, 0.0, 10.0, 1.0 };
@@ -35,17 +36,17 @@ void init()
 	glEnable(GL_DEPTH_TEST);
 }
 
-void reshape(GLsizei weight, GLsizei height)
+void reshape(GLsizei width, GLsizei height)
 {
-	float* pacManPosition = pacMan->getPosition();
+	float* pacManPosition = pacMan->getPositionOnScene();
 
-	if (height > 0 && weight > 0)
+	if (height > 0 && width > 0)
 	{
-		glViewport(0, 0, weight, height);
+		glViewport(0, 0, width, height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 
-		gluPerspective(60.0f, (float)weight / (float)height, 1.0f, 1000.0f);
+		gluPerspective(60.0f, (float)width / (float)height, 1.0f, 1000.0f);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
@@ -93,18 +94,26 @@ void processMoveKeys(int key, int xx, int yy)
 
 void game()
 {
-	pacMan->moveControl();
-	for (int i = 0; i < GHOSTS; i++)
+	if (life)
 	{
-		ghosts[i]->randomMove();
+		for (int i = 0; i < GHOSTS; i++)
+		{
+			ghosts[i]->randomMove();
+		}
+
+		pacMan->moveControl();
+		if (pacMan->isCollision(ghosts))
+			life = false;
+
+		Sleep(35);
 	}
-	Sleep(35);
 	reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	display();
 }
 
 void initFigures()
 {
+	ghosts = new Ghost*[GHOSTS];
 	int* positionOnMap = new int[2];
 	
 	positionOnMap[0] = 22;

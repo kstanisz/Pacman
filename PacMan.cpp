@@ -9,6 +9,39 @@ void PacMan::setCommand(int command)
 {
 	this->command = command;
 }
+
+bool PacMan::isCollision(Ghost** ghosts)
+{
+	for (int i = 0; i < GHOSTS; i++)
+	{
+		int* ghostPosition = ghosts[i]->getPositionOnMap();
+		// Sprawdzam czy jest kolizja u gory
+		if (positionOnMap[1] == ghostPosition[1] && // Ta sama wartosc na x
+			(positionOnMap[0] == ghostPosition[0] ||	// Ta sama wartosc na y
+				(positionOnMap[0] == (ghostPosition[0] + 1) && stateVertical>ghosts[i]->getStateVertical()))) // Duszek wyzej o 1, ale nachodza na siebie
+			return true;
+
+		// Sprawdzam czy jest kolizja od dolu
+		if (positionOnMap[1] == ghostPosition[1] && // Ta sama wartosc na x
+			(positionOnMap[0] == ghostPosition[0] ||	// Ta sama wartosc na y
+				(positionOnMap[0] == (ghostPosition[0]-1) && stateVertical<ghosts[i]->getStateVertical()))) // Duszek nizej o 1, ale nachodza na siebie
+			return true;
+
+		// Sprawdzam czy jest kolizja od prawej
+		if (positionOnMap[0] == ghostPosition[0] && // Ta sama wartosc na y
+			(positionOnMap[1] == ghostPosition[1] ||	// Ta sama wartosc na x
+				(positionOnMap[1] == (ghostPosition[1] - 1) && stateHorizontal>ghosts[i]->getStateHorizontal()))) // Duszek jest po prawej o 1, ale nachodza na siebie
+			return true;
+
+		// Sprawdzam czy jest kolizja od lewej
+		if (positionOnMap[0] == ghostPosition[0] && // Ta sama wartosc na y
+			(positionOnMap[1] == ghostPosition[1] ||	// Ta sama wartosc na x
+				(positionOnMap[1] == (ghostPosition[1] + 1) && stateHorizontal<ghosts[i]->getStateHorizontal()))) // Duszek jest po lewej o 1, ale nachodza na siebie
+			return true;
+	}
+	return false;
+}
+
 void PacMan::moveControl()
 {
 	switch (direction)

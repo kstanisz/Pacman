@@ -24,8 +24,11 @@ public:
 	Figure(int* positionOnMap);
 	~Figure();
 
-	void setPosition(float* positionOnScene);
-	float* getPosition();
+	void setPositionOnScene(float* positionOnScene);
+	float* getPositionOnScene();
+	int* getPositionOnMap();
+	int getStateHorizontal();
+	int getStateVertical();
 	
 	void move(Direction direction);
 

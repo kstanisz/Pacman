@@ -21,14 +21,29 @@ Figure::~Figure()
 	delete positionOnScene;
 }
 
-void Figure::setPosition(float* positionOnScene)
+void Figure::setPositionOnScene(float* positionOnScene)
 {
 	this->positionOnScene = positionOnScene;
 }
 
-float* Figure::getPosition()
+float* Figure::getPositionOnScene()
 {
 	return positionOnScene;
+}
+
+int* Figure::getPositionOnMap()
+{
+	return positionOnMap;
+}
+
+int Figure::getStateHorizontal()
+{
+	return stateHorizontal;
+}
+
+int Figure::getStateVertical()
+{
+	return stateVertical;
 }
 
 void Figure::move(Direction direction)
