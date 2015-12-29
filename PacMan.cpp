@@ -44,6 +44,9 @@ bool PacMan::isCollision(Ghost** ghosts)
 
 void PacMan::moveControl()
 {
+	if (stateVertical == 0 || stateHorizontal == 0)
+		collect();
+
 	switch (direction)
 	{
 	case Direction(FORWARD):
@@ -164,6 +167,11 @@ void PacMan::moveControl()
 		break;
 
 	}
+}
+
+void PacMan::collect()
+{
+	Pellet::removePelletFromMap(positionOnMap);
 }
 
 void PacMan::display()

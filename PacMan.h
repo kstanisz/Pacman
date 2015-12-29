@@ -2,6 +2,7 @@
 #define PACMAN_H
 #include "Ghost.h"
 #include "Figure.h"
+#include "Pellet.h"
 
 class PacMan : public Figure
 {
@@ -15,6 +16,7 @@ public:
 
 	void setCommand(int command);
 	void moveControl();
+	void collect();
 	bool isCollision(Ghost** ghosts);
 	void display();
 };

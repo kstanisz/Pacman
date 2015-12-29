@@ -3,6 +3,7 @@
 
 #define WINDOW_SIZE 500
 #define WINDOW_POSITION 0
+#define WAIT_TIME 15
 
 #define GHOSTS 4
 
@@ -30,6 +31,14 @@ enum Direction
 	BACK,
 	RIGHT,
 	LEFT
+};
+
+enum PelletType
+{
+	NO_PELLET=0,
+	NORMAL=1,
+	EXTRA=2,
+	POWER=3,
 };
 
 #endif

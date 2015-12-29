@@ -27,6 +27,8 @@ void Scene::displayLabirynth()
 
 	glPushMatrix();
 	glTranslatef(TRANSLATION_X, 0.0,TRANSLATION_Z);
+
+	Pellet*** map = Pellet::getMap();
 	
 	for (int i = 0; i < MAP_SIZE; i++)
 	{
@@ -40,8 +42,9 @@ void Scene::displayLabirynth()
 					glutSolidCube(WALL_BRICK_SIZE);
 				glPopMatrix();
 			}
-			else
+			else if(map[i][j]!=NULL)
 			{
+				map[i][j]->display();
 			}
 			glPushMatrix();
 				glMaterialfv(GL_FRONT, GL_DIFFUSE, floorDiffuse);

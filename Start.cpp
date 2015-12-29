@@ -6,18 +6,20 @@
 #include "Scene.h"
 #include "PacMan.h"
 #include "Ghost.h"
+#include "Pellet.h"
 
 using namespace std;
 
 static Scene* scene = new Scene();
 int** Figure::map = Figure::createMap();
+Pellet*** Pellet::map = Pellet::createMap();
 PacMan* pacMan;
 Ghost** ghosts;
 bool life = true;
 
 void init()
 {
-	cout << "xdddd";
+	cout << "x";
 	GLfloat mat_ambient[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat light_position[] = { 0.0, 0.0, 10.0, 1.0 };
@@ -105,7 +107,7 @@ void game()
 		if (pacMan->isCollision(ghosts))
 			life = false;
 
-		Sleep(35);
+		Sleep(WAIT_TIME);
 	}
 	reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	display();

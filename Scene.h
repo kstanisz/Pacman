@@ -6,6 +6,7 @@
 #include <fstream>
 #include <GL/gl.h>
 #include "glut.h"
+#include "Pellet.h"
 #include "Config.h"
 
 class Scene
