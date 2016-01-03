@@ -2,17 +2,13 @@
 
 using namespace std;
 
+Figure::Figure()
+{
+}
+
 Figure::Figure(int* positionOnMap)
 {
-	this->positionOnMap = positionOnMap;
-	stateHorizontal = 0;
-	stateVertical = 0;
-	direction = Direction(FORWARD);
-
-	positionOnScene = new float[DIMENSIONS];
-	positionOnScene[Dimension(X)] = float(positionOnMap[1]) * WALL_BRICK_SIZE + TRANSLATION_X;
-	positionOnScene[Dimension(Y)] = float(0.25 / 2.0);
-	positionOnScene[Dimension(Z)] = float(positionOnMap[0]) * WALL_BRICK_SIZE + TRANSLATION_Z;
+	setPositionOnMap(positionOnMap);
 }
 
 Figure::~Figure()
@@ -29,6 +25,19 @@ void Figure::setPositionOnScene(float* positionOnScene)
 float* Figure::getPositionOnScene()
 {
 	return positionOnScene;
+}
+
+void Figure::setPositionOnMap(int* positionOnMap)
+{
+	this->positionOnMap = positionOnMap;
+	stateHorizontal = 0;
+	stateVertical = 0;
+	direction = Direction(FORWARD);
+
+	positionOnScene = new float[DIMENSIONS];
+	positionOnScene[Dimension(X)] = float(positionOnMap[1]) * WALL_BRICK_SIZE + TRANSLATION_X;
+	positionOnScene[Dimension(Y)] = float(0.25 / 2.0);
+	positionOnScene[Dimension(Z)] = float(positionOnMap[0]) * WALL_BRICK_SIZE + TRANSLATION_Z;
 }
 
 int* Figure::getPositionOnMap()

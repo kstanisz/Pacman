@@ -1,5 +1,10 @@
 #include "PacMan.h"
 
+PacMan::PacMan() : Figure()
+{
+
+}
+
 PacMan::PacMan(int* positionOnMap) : Figure(positionOnMap)
 {
 	command = Direction(FORWARD);
@@ -169,9 +174,14 @@ void PacMan::moveControl()
 	}
 }
 
+int PacMan::getScore()
+{
+	return score;
+}
+
 void PacMan::collect()
 {
-	Pellet::removePelletFromMap(positionOnMap);
+	score+=Pellet::collectPelletFromMap(positionOnMap);
 }
 
 void PacMan::display()

@@ -13,6 +13,7 @@ class Pellet
 private:
 
 	PelletType type;
+	int value;
 	static Pellet*** map;
 	int* positionOnMap;
 
@@ -20,10 +21,11 @@ public:
 
 	Pellet();
 	Pellet(PelletType type,int* positionOnMap);
+	int getValue();
 	void display();
 	static Pellet*** createMap();
 	static Pellet*** getMap();
-	static bool removePelletFromMap(int* positionOnMap);
+	static int collectPelletFromMap(int* positionOnMap);
 };
 
 #endif

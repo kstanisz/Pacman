@@ -3,9 +3,15 @@
 
 #define WINDOW_SIZE 500
 #define WINDOW_POSITION 0
-#define WAIT_TIME 15
+#define DISPLAY_TIME 50
+#define RESPAWN_TIME 100
 
 #define GHOSTS 4
+#define LIFES 3
+#define NORMAL_PELLET_VALUE 10
+#define EXTRA_PELLET_VALUE 15
+#define POWER_PELLET_VALUE 30
+
 
 #define CAMERA_Y 3.0f
 #define CAMERA_Z 2.0f

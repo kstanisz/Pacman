@@ -21,11 +21,13 @@ protected:
 
 public:
 
+	Figure();
 	Figure(int* positionOnMap);
 	~Figure();
 
 	void setPositionOnScene(float* positionOnScene);
 	float* getPositionOnScene();
+	void setPositionOnMap(int* positionOnMap);
 	int* getPositionOnMap();
 	int getStateHorizontal();
 	int getStateVertical();

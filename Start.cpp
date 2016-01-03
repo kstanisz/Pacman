@@ -15,11 +15,12 @@ int** Figure::map = Figure::createMap();
 Pellet*** Pellet::map = Pellet::createMap();
 PacMan* pacMan;
 Ghost** ghosts;
-bool life = true;
+int lifes=LIFES;
+int oldTime=0;
 
 void init()
 {
-	cout << "x";
+	cout << "xedsweweSxe";
 	GLfloat mat_ambient[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat light_position[] = { 0.0, 0.0, 10.0, 1.0 };
@@ -94,9 +95,43 @@ void processMoveKeys(int key, int xx, int yy)
 	}
 }
 
-void game()
+void setStartPositions()
 {
-	if (life)
+	int* pacManPositionOnMap = new int[2];
+	pacManPositionOnMap[0] = 22;
+	pacManPositionOnMap[1] = 6;
+	pacMan->setPositionOnMap(pacManPositionOnMap);
+	pacMan->setCommand(Direction(FORWARD));
+
+	int** ghostPositionOnMap = new int*[GHOSTS];
+	for (int i = 0; i < GHOSTS; i++)
+	{
+		ghostPositionOnMap[i] = new int[2];
+	}
+
+	ghostPositionOnMap[0][0] = 12;
+	ghostPositionOnMap[0][1] = 11;
+	ghosts[0]->setPositionOnMap(ghostPositionOnMap[0]);
+
+	ghostPositionOnMap[1][0] = 12;
+	ghostPositionOnMap[1][1] = 13;
+	ghosts[1]->setPositionOnMap(ghostPositionOnMap[1]);
+
+	ghostPositionOnMap[2][0] = 12;
+	ghostPositionOnMap[2][1] = 16;
+	ghosts[2]->setPositionOnMap(ghostPositionOnMap[2]);
+
+	ghostPositionOnMap[3][0] = 13;
+	ghostPositionOnMap[3][1] = 13;
+	ghosts[3]->setPositionOnMap(ghostPositionOnMap[3]);
+}
+
+void game(int passedTime)
+{
+	if (passedTime <= DISPLAY_TIME)
+		Sleep(DISPLAY_TIME - passedTime);
+
+	if (lifes>0)
 	{
 		for (int i = 0; i < GHOSTS; i++)
 		{
@@ -105,42 +140,38 @@ void game()
 
 		pacMan->moveControl();
 		if (pacMan->isCollision(ghosts))
-			life = false;
-
-		Sleep(WAIT_TIME);
+		{
+			lifes--;
+			Sleep(RESPAWN_TIME);
+			setStartPositions();
+		}
+	}
+	else
+	{
+		//cout << pacMan->getScore() << endl;
 	}
 	reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-	display();
+}
+
+void idle()
+{
+	int elapsedTime = glutGet(GLUT_ELAPSED_TIME);
+	int passedTime = elapsedTime - oldTime;
+	oldTime = elapsedTime;
+	game(passedTime);
+	glutPostRedisplay();
 }
 
 void initFigures()
 {
+	pacMan = new PacMan();
 	ghosts = new Ghost*[GHOSTS];
-	int* positionOnMap = new int[2];
-	
-	positionOnMap[0] = 22;
-	positionOnMap[1] = 6;
-	pacMan = new PacMan(positionOnMap);
+	for (int i = 0; i < GHOSTS; i++)
+	{
+		ghosts[i] = new Ghost();
+	}
 
-	positionOnMap = new int[2];
-	positionOnMap[0] = 12;
-	positionOnMap[1] = 11;
-	ghosts[0] = new Ghost(positionOnMap);
-
-	positionOnMap = new int[2];
-	positionOnMap[0] = 12;
-	positionOnMap[1] = 13;
-	ghosts[1] = new Ghost(positionOnMap);
-
-	positionOnMap = new int[2];
-	positionOnMap[0] = 12;
-	positionOnMap[1] = 16;
-	ghosts[2] = new Ghost(positionOnMap);
-
-	positionOnMap = new int[2];
-	positionOnMap[0] = 13;
-	positionOnMap[1] = 13;
-	ghosts[3] = new Ghost(positionOnMap);
+	setStartPositions();
 }
 
 void deleteReferences()
@@ -162,7 +193,7 @@ int main(int argc, char** argv)
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 	glutSpecialFunc(processMoveKeys);
-	glutIdleFunc(game);
+	glutIdleFunc(idle);
 
 	initFigures();
 

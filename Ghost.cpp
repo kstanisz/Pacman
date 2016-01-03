@@ -6,6 +6,10 @@
 
 using namespace std;
 
+Ghost::Ghost() : Figure()
+{
+
+}
 Ghost::Ghost(int* positionOnMap) : Figure(positionOnMap)
 {
 

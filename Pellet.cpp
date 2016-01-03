@@ -8,34 +8,54 @@ Pellet::Pellet(PelletType type, int* positionOnMap)
 {
 	this->type = type;
 	this->positionOnMap = positionOnMap;
+
+	switch (type)
+	{
+	case PelletType(NORMAL):
+		value = NORMAL_PELLET_VALUE;
+		break;
+	case PelletType(EXTRA):
+		value = EXTRA_PELLET_VALUE;
+		break;
+	case PelletType(POWER):
+		value = POWER_PELLET_VALUE;
+		break;
+	}
+}
+
+int Pellet::getValue()
+{
+	return value;
 }
 
 void Pellet::display()
 {
-	GLfloat pelletDiffuse[] = { 0.2, 0.0, 0.2, 1.0 };
+	GLfloat pelletNormalDiffuse[] = { 0.2, 0.0, 0.2, 1.0 };
+	GLfloat pelletExtraDiffuse[] = { 0.2, 0.4, 0.2, 1.0 };
+	GLfloat pelletPowerDiffuse[] = { 0.8, 0.1, 0.8, 1.0 };
 	switch (type)
 	{
 	case PelletType(NORMAL):
 		glPushMatrix();
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, pelletDiffuse);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, pelletNormalDiffuse);
 		glTranslatef(positionOnMap[1] * WALL_BRICK_SIZE, 0.1 / 2, positionOnMap[0] * WALL_BRICK_SIZE);
-		glutSolidSphere(0.1, 50, 50);
+		glutSolidSphere(0.1, 10, 10);
 		glPopMatrix();
 		break;
 
 	case PelletType(EXTRA):
 		glPushMatrix();
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, pelletDiffuse);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, pelletExtraDiffuse);
 		glTranslatef(positionOnMap[1] * WALL_BRICK_SIZE, 0.1 / 2, positionOnMap[0] * WALL_BRICK_SIZE);
-		glutSolidSphere(0.1, 50, 50);
+		glutSolidSphere(0.1, 10, 10);
 		glPopMatrix();
 
 		break;
 	case PelletType(POWER):
 		glPushMatrix();
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, pelletDiffuse);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, pelletPowerDiffuse);
 		glTranslatef(positionOnMap[1] * WALL_BRICK_SIZE, 0.1 / 2, positionOnMap[0] * WALL_BRICK_SIZE);
-		glutSolidSphere(0.1, 50, 50);
+		glutSolidSphere(0.1, 10, 10);
 		glPopMatrix();
 
 		break;
@@ -94,13 +114,14 @@ Pellet*** Pellet::getMap()
 	return map;
 }
 
-bool Pellet::removePelletFromMap(int* positionOnMap)
+int Pellet::collectPelletFromMap(int* positionOnMap)
 {
 	if (map[positionOnMap[0]][positionOnMap[1]] != NULL)
 	{
+		int value = map[positionOnMap[0]][positionOnMap[1]]->getValue();
 		map[positionOnMap[0]][positionOnMap[1]] = NULL;
-		return true;
+		return value;
 	}
 
-	return false;
+	return 0;
 }

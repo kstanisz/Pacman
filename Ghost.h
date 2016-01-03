@@ -8,6 +8,7 @@ private:
 
 public:
 
+	Ghost();
 	Ghost(int* positionOnMap);
 
 	void display();
