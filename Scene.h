@@ -6,7 +6,9 @@
 #include <fstream>
 #include <GL/gl.h>
 #include "glut.h"
+#include "SOIL.h"
 #include "Pellet.h"
+#include "SolidCube.h"
 #include "Config.h"
 
 class Scene
@@ -20,7 +22,7 @@ public:
 	Scene();
 	~Scene();
 
-	void displayLabirynth();
+	void displayLabirynth(GLuint textures[TEXTURES]);
 	void readLabirynthFromFile();
 };
 
