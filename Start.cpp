@@ -123,6 +123,16 @@ void idle()
 
 void game(int passedTime)
 {
+	static bool collision = false;
+
+	if (collision)
+	{
+		lifes--;
+		Sleep(RESPAWN_TIME);
+		setStartPositions();
+		collision = false;
+	}
+
 	if (passedTime <= DISPLAY_TIME)
 		Sleep(DISPLAY_TIME - passedTime);
 
@@ -133,11 +143,7 @@ void game(int passedTime)
 
 		pacMan->moveControl();
 		if (pacMan->isCollision(ghosts))
-		{
-			lifes--;
-			Sleep(RESPAWN_TIME);
-			setStartPositions();
-		}
+			collision = true;
 	}
 	else
 	{
