@@ -39,7 +39,7 @@ void Pellet::display()
 		glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, pelletNormalDiffuse);
 		glTranslatef(positionOnMap[1] * WALL_BRICK_SIZE, 0.1 / 2, positionOnMap[0] * WALL_BRICK_SIZE);
-		glutSolidSphere(0.1, 10, 10);
+		glutSolidSphere(0.1, 8, 8);
 		glPopMatrix();
 		break;
 
@@ -47,7 +47,7 @@ void Pellet::display()
 		glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, pelletExtraDiffuse);
 		glTranslatef(positionOnMap[1] * WALL_BRICK_SIZE, 0.1 / 2, positionOnMap[0] * WALL_BRICK_SIZE);
-		glutSolidSphere(0.1, 10, 10);
+		glutSolidSphere(0.1, 8, 8);
 		glPopMatrix();
 
 		break;
@@ -55,7 +55,7 @@ void Pellet::display()
 		glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, pelletPowerDiffuse);
 		glTranslatef(positionOnMap[1] * WALL_BRICK_SIZE, 0.1 / 2, positionOnMap[0] * WALL_BRICK_SIZE);
-		glutSolidSphere(0.1, 10, 10);
+		glutSolidSphere(0.1, 8, 8);
 		glPopMatrix();
 
 		break;

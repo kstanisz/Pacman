@@ -2,12 +2,26 @@
 
 PacMan::PacMan() : Figure()
 {
-
+	openJaw = true;
+	openCloseJawCounter = 0;
 }
 
 PacMan::PacMan(int* positionOnMap) : Figure(positionOnMap)
 {
+	openJaw = true;
+	openCloseJawCounter = 0;
 	command = Direction(FORWARD);
+}
+
+void PacMan::increaseOpenCloseJawCounter()
+{
+	if (openCloseJawCounter < 2)
+		openCloseJawCounter++;
+	else
+	{
+		openCloseJawCounter = 0;
+		openJaw = openJaw ? false : true;
+	}
 }
 
 void PacMan::setCommand(int command)
@@ -49,6 +63,8 @@ bool PacMan::isCollision(Ghost** ghosts)
 
 void PacMan::moveControl()
 {
+	increaseOpenCloseJawCounter();
+
 	if (stateVertical == 0 || stateHorizontal == 0)
 		collect();
 
@@ -174,6 +190,11 @@ void PacMan::moveControl()
 	}
 }
 
+bool PacMan::isOpenJaw()
+{
+	return openJaw;
+}
+
 int PacMan::getScore()
 {
 	return score;
@@ -184,13 +205,24 @@ void PacMan::collect()
 	score+=Pellet::collectPelletFromMap(positionOnMap);
 }
 
-void PacMan::display()
+void PacMan::display(GLuint texture)
 {
 	GLfloat pacManDiffuse[] = { 0.9, 0.0, 0.9, 1.0 };
 
 	glPushMatrix();
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, pacManDiffuse);
+
 		glTranslatef(positionOnScene[Dimension(X)], positionOnScene[Dimension(Y)], positionOnScene[Dimension(Z)]);
-		glutSolidSphere(0.25, 50, 50);
+		glRotatef(90.0f*direction, 0.0f, 1.0f, 0.0f);
+		glRotatef(-110.0f, 1.0f, 0.0f, 0.0f);
+
+		GLUquadricObj *qObj = gluNewQuadric();	
+		//gluQuadricNormals(qObj, GLU_SMOOTH);
+		gluQuadricTexture(qObj, GL_TRUE);
+		
+		glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, texture);
+			gluSphere(qObj, 0.25f, 30, 30);
+		glDisable(GL_TEXTURE_2D);
+
 	glPopMatrix();
 }

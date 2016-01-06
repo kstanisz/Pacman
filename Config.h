@@ -4,12 +4,12 @@
 #define WINDOW_SIZE 500
 #define WINDOW_POSITION 0
 #define SCOREBOARD_HEIGHT 50
-#define DISPLAY_TIME 50
+#define DISPLAY_TIME 70
 #define RESPAWN_TIME 1000
 
 #define GHOSTS 4
 #define LIFES 3
-#define TEXTURES 2
+#define TEXTURES 4
 #define NORMAL_PELLET_VALUE 10
 #define EXTRA_PELLET_VALUE 15
 #define POWER_PELLET_VALUE 30
@@ -35,9 +35,9 @@ enum Dimension
 
 enum Direction
 {
-	FORWARD,
 	BACK,
 	RIGHT,
+	FORWARD,
 	LEFT
 };
 

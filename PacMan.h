@@ -10,6 +10,10 @@ private:
 
 	int command;
 	int score;
+	int openCloseJawCounter;
+	bool openJaw;
+
+	void increaseOpenCloseJawCounter();
 
 public:
 
@@ -18,10 +22,11 @@ public:
 
 	void setCommand(int command);
 	void moveControl();
+	bool isOpenJaw();
 	int getScore();
 	void collect();
 	bool isCollision(Ghost** ghosts);
-	void display();
+	void display(GLuint texture);
 };
 
 #endif
