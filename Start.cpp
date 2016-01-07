@@ -20,9 +20,12 @@ GLuint textures[TEXTURES];
 int lifes=LIFES;
 int oldTime=0;
 
-void display();
-void reshape(GLsizei width, GLsizei height);
+void drawScene();
+void drawGameBoard(GLsizei width, GLsizei height);
 void setCamera();
+void displayGameBoard();
+void drawScoreBoard(GLsizei width, GLsizei height);
+void displayScoreBoard();
 void processMoveKeys(int key, int xx, int yy);
 void idle();
 void game(int passedTime);
@@ -41,8 +44,8 @@ int main(int argc, char** argv)
 
 	glutCreateWindow("PAC-MANa");
 
-	glutDisplayFunc(display);
-	glutReshapeFunc(reshape);
+	glutDisplayFunc(drawScene);
+	//glutReshapeFunc(drawScene);
 	glutSpecialFunc(processMoveKeys);
 	glutIdleFunc(idle);
 
@@ -53,32 +56,30 @@ int main(int argc, char** argv)
 	return 0;
 }
 
-void display()
+void drawScene()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glMatrixMode(GL_MODELVIEW);
-	
-	scene->displayLabirynth(textures);
-	pacMan->display(textures[2+ (pacMan->isOpenJaw()? 0:1)]);
-	for (int i = 0; i < GHOSTS; i++)
-		ghosts[i]->display();
-	
+	drawGameBoard(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+	drawScoreBoard(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+
 	glFlush();
 	glutSwapBuffers();
 }
 
-void reshape(GLsizei width, GLsizei height)
+void drawGameBoard(GLsizei width, GLsizei height)
 {
-	if (height> 0 && width > 0)
+	if (height > 0 && width > 0)
 	{
-		glViewport(0, 0, width, height);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-
-		gluPerspective(60.0f, (float)width / (float)height, 1.0f, 1000.0f);
+		glViewport(0, SCOREBOARD_HEIGHT, width, height - SCOREBOARD_HEIGHT);
+		gluPerspective(60.0f, (float)width / (float)(height - SCOREBOARD_HEIGHT), 1.0f, 1000.0f);
 		glMatrixMode(GL_MODELVIEW);
+		glScissor(0, SCOREBOARD_HEIGHT, width, height - SCOREBOARD_HEIGHT);
 		glLoadIdentity();
 		setCamera();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		displayGameBoard();
 	}
 }
 
@@ -89,6 +90,37 @@ void setCamera()
 	gluLookAt(pacManPosition[Dimension(X)], CAMERA_Y, pacManPosition[Dimension(Z)] + CAMERA_Z,
 		pacManPosition[Dimension(X)], pacManPosition[Dimension(Y)], pacManPosition[Dimension(Z)],
 		0.0f, 1.0f, 0.0f);
+}
+
+void displayGameBoard()
+{
+	scene->displayLabirynth(textures);
+	pacMan->display(textures[2 + (pacMan->isOpenJaw() ? 0 : 1)]);
+	for (int i = 0; i < GHOSTS; i++)
+		ghosts[i]->display();
+}
+
+void drawScoreBoard(GLsizei width, GLsizei height)
+{
+	if (height > 0 && width > 0)
+	{
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glViewport(0, 0, width, SCOREBOARD_HEIGHT);
+		gluPerspective(60.0f, (float)width / (float)(SCOREBOARD_HEIGHT), 1.0f, 1000.0f);
+		glMatrixMode(GL_MODELVIEW);
+		glScissor(0, 0, width, SCOREBOARD_HEIGHT);
+		glLoadIdentity();
+		setCamera();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		displayScoreBoard();
+	}
+}
+
+void displayScoreBoard()
+{
+
 }
 
 void processMoveKeys(int key, int xx, int yy)
@@ -117,7 +149,6 @@ void idle()
 	int passedTime = elapsedTime - oldTime;
 	oldTime = elapsedTime;
 	game(passedTime);
-	reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 	glutPostRedisplay();
 }
 
@@ -147,7 +178,7 @@ void game(int passedTime)
 	}
 	else
 	{
-		//cout << pacMan->getScore() << endl;
+		cout << pacMan->getScore() << endl;
 	}
 }
 
@@ -182,6 +213,7 @@ void setStartPositions()
 
 void init()
 {
+	cout << "xs";
 	GLfloat mat_ambient[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat light_position[] = { 0.0, 0.0, 10.0, 1.0 };
@@ -194,6 +226,7 @@ void init()
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lm_ambient);
 	
 	glShadeModel(GL_SMOOTH);
+	glEnable(GL_SCISSOR_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glDepthFunc(GL_LEQUAL);

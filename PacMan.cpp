@@ -1,15 +1,18 @@
 #include "PacMan.h"
 
+
 PacMan::PacMan() : Figure()
 {
 	openJaw = true;
 	openCloseJawCounter = 0;
+	score = 0;
 }
 
 PacMan::PacMan(int* positionOnMap) : Figure(positionOnMap)
 {
 	openJaw = true;
 	openCloseJawCounter = 0;
+	score = 0;
 	command = Direction(FORWARD);
 }
 
