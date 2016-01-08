@@ -1,12 +1,13 @@
 #include "ScoreBoard.h"
+#include <iostream>
+using namespace std;
 
 ScoreBoard::ScoreBoard(){}
 
 void ScoreBoard::drawText(string text, int x, int y,const GLfloat color[3])
 {
-	glColor3f(color[0], color[1], color[2]);
+	glColor3f(color[0], color[1], color[2]);	
 	glRasterPos2i(x, y);
-	void * font = GLUT_BITMAP_9_BY_15;
 
 	for (std::string::iterator i = text.begin(); i != text.end(); ++i)
 	{
@@ -18,34 +19,34 @@ void ScoreBoard::drawText(string text, int x, int y,const GLfloat color[3])
 void ScoreBoard::displayScore(int score)
 {
 	this->score = score;
-	drawText("Score: "+intToString(score), 30, SCOREBOARD_HEIGHT/2-9, scoreColor);
+	drawText("SCORE: "+intToString(score), 30, SCOREBOARD_HEIGHT/2-9, greenColor);
 }
 
 void ScoreBoard::displayLives(int lives)
 {
 	this->lives = lives;
-	drawText("Lives: "+intToString(lives), 200, SCOREBOARD_HEIGHT/2-9, scoreColor);
+	drawText("LIVES: "+intToString(lives), 170, SCOREBOARD_HEIGHT/2-9, redColor);
 }
 
 void ScoreBoard::displayGameOverText()
 {
-	drawText("GAME OVER!", 350, SCOREBOARD_HEIGHT / 2 - 9, scoreColor);
+	drawText("!!! GAME OVER !!!", 300, SCOREBOARD_HEIGHT / 2 - 9, redColor);
 }
 
 void ScoreBoard::displayWinnerText()
 {
-	drawText("CONGRATULATION! YOU WIN!", 350, SCOREBOARD_HEIGHT / 2 - 9, scoreColor);
+	drawText("..:: CONGRATULATIONS, YOU WIN! ::..", 300, SCOREBOARD_HEIGHT / 2 - 9, redColor);
 }
 
 void ScoreBoard::displayPauseInfo(bool pause)
 {
 	if (pause)
 	{
-		drawText("Press Spacebar to START", 350, SCOREBOARD_HEIGHT / 2 - 9, scoreColor);
+		drawText("..:: Press Spacebar to START ::..", 300, SCOREBOARD_HEIGHT / 2 - 9, greenColor);
 	}
 	else
 	{
-		drawText("Press Spacebar to PAUSE", 350, SCOREBOARD_HEIGHT / 2 - 9, scoreColor);
+		drawText("..:: Press Spacebar to PAUSE ::..", 300, SCOREBOARD_HEIGHT / 2 - 9, greenColor);
 	}
 }
 

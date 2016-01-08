@@ -25,7 +25,7 @@ public:
 	static int numberOfPellets;
 	int getValue();
 	void display();
-	static Pellet*** createMap();
+	static void createMap();
 	static Pellet*** getMap();
 	static int collectPelletFromMap(int* positionOnMap);
 	static bool isAllCollected();

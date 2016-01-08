@@ -3,8 +3,12 @@
 using namespace std;
 
 int Pellet::numberOfPellets = 0;
+Pellet*** Pellet::map = NULL;
 
-Pellet::Pellet(){}
+Pellet::Pellet()
+{
+
+}
 
 Pellet::Pellet(PelletType type, int* positionOnMap)
 {
@@ -64,11 +68,11 @@ void Pellet::display()
 	}
 }
 
-Pellet*** Pellet::createMap()
+void Pellet::createMap()
 {
 	Pellet::numberOfPellets = 0;
 
-	Pellet*** map = new Pellet**[MAP_SIZE];
+	map = new Pellet**[MAP_SIZE];
 	for (int i = 0; i < MAP_SIZE; i++)
 	{
 		map[i] = new Pellet*[MAP_SIZE];
@@ -113,7 +117,6 @@ Pellet*** Pellet::createMap()
 		}
 	}
 	file.close();
-	return map;
 }
 
 Pellet*** Pellet::getMap()

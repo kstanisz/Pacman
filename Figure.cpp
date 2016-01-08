@@ -2,6 +2,8 @@
 
 using namespace std;
 
+int** Figure::map = Figure::createMap();
+
 Figure::Figure()
 {
 }

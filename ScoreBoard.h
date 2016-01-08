@@ -17,8 +17,10 @@ private:
 
 	int score = 0;
 	int lives = 3;
-	const GLfloat scoreColor[3] = { 1.0,0.0,1.0 };
-	const GLfloat livesColor[3] = { 1.0,0.0,1.0 };
+	void * font = GLUT_BITMAP_HELVETICA_18;
+	const GLfloat greenColor[3] = { 0.0f,0.3f,0.0f };
+	const GLfloat redColor[3] = { 0.3f,0.0f,0.0f };
+
 
 	void drawText(std::string text, int x, int y, const GLfloat color[3]);
 	string intToString(int value);

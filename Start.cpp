@@ -16,12 +16,12 @@ GameBoard* gameBoard;
 ScoreBoard* scoreBoard;
 PacMan* pacMan;
 Ghost** ghosts;
-int** Figure::map = Figure::createMap();
-Pellet*** Pellet::map = Pellet::createMap();
+
+
 GLuint textures[TEXTURES];
-int lives=LIVES;
-int oldTime=0;
-bool pause = true;
+int lives;
+int oldTime;
+bool pause;
 
 void drawScene();
 void drawGameBoard(GLsizei width, GLsizei height);
@@ -30,12 +30,13 @@ void displayGameBoard();
 void drawScoreBoard(GLsizei width, GLsizei height);
 void displayScoreBoard();
 void reshapeWindow(int x, int y);
-void processMoveKeys(int key, int xx, int yy);
+void processMoveKeys(int key, int x, int y);
 void keyPressed(unsigned char key, int x, int y);
 void idle();
 void game(int passedTime);
 void setStartPositions();
 void init();
+void startGame();
 void initFigures();
 int LoadGlTextures();
 void deleteReferences();
@@ -125,6 +126,8 @@ void drawScoreBoard(GLsizei width, GLsizei height)
 
 void displayScoreBoard()
 {
+	glDisable(GL_LIGHTING);
+	
 	scoreBoard->displayScore(pacMan->getScore());
 	scoreBoard->displayLives(lives);
 	if (lives == 0)
@@ -133,6 +136,8 @@ void displayScoreBoard()
 		scoreBoard->displayWinnerText();
 	else
 		scoreBoard->displayPauseInfo(pause);
+
+	glEnable(GL_LIGHTING);
 }
 
 void reshapeWindow(int x, int y)
@@ -147,7 +152,7 @@ void reshapeWindow(int x, int y)
 		glutReshapeWindow(x, y);
 }
 
-void processMoveKeys(int key, int xx, int yy)
+void processMoveKeys(int key, int x, int y)
 {
 	switch (key)
 	{
@@ -172,7 +177,13 @@ void keyPressed(unsigned char key, int x, int y)
 	switch (key)
 	{
 		case KEY_SPACE_BAR:
-			pause = pause ? false : true;
+			if (lives == 0 || Pellet::isAllCollected())
+			{
+				deleteReferences();
+				startGame();
+			}
+			else
+				pause = pause ? false : true;
 			break;
 	}
 }
@@ -204,7 +215,7 @@ void game(int passedTime)
 	if (passedTime <= DISPLAY_TIME)
 		Sleep(DISPLAY_TIME - passedTime);
 
-	if (lives>0)
+	if (!Pellet::isAllCollected() && lives>0)
 	{
 		for (int i = 0; i < GHOSTS; i++)
 			ghosts[i]->randomMove();
@@ -250,7 +261,7 @@ void setStartPositions()
 
 void init()
 {
-	cout << "xsSSddddDesddsss";
+	cout << "xsSSddDddDdfdDSesDSeddsss";
 	GLfloat mat_ambient[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat light_position[] = { 0.0, 0.0, 10.0, 1.0 };
@@ -269,10 +280,19 @@ void init()
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);
 
+	LoadGlTextures();
+	startGame();
+}
+
+void startGame()
+{
+	lives = LIVES;
+	oldTime = 0;
+	pause = true;
+	Pellet::createMap();
 	gameBoard = new GameBoard();
 	scoreBoard = new ScoreBoard();
 	initFigures();
-	LoadGlTextures();
 }
 
 void initFigures()
