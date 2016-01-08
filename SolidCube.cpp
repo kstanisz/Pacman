@@ -1,48 +1,46 @@
 #include "SolidCube.h"
 
-using namespace std;
+GLfloat SolidCube::vertices[VERTICES] =
+{ 
+-0.5f, 0.0f, 0.5f,   0.5f, 0.0f, 0.5f,   0.5f, 1.0f, 0.5f,  -0.5f, 1.0f, 0.5f,
+-0.5f, 1.0f, -0.5f,  0.5f, 1.0f, -0.5f,  0.5f, 0.0f, -0.5f, -0.5f, 0.0f, -0.5f,
+0.5f, 0.0f, 0.5f,   0.5f, 0.0f, -0.5f,  0.5f, 1.0f, -0.5f,  0.5f, 1.0f, 0.5f,
+-0.5f, 0.0f, -0.5f,  -0.5f, 0.0f, 0.5f,  -0.5f, 1.0f, 0.5f, -0.5f, 1.0f, -0.5f
+};
 
-void APIENTRY SolidCube::drawCube(GLdouble size, GLuint texture)
+GLfloat SolidCube::texCoords[TEX_COORDS]=
+{ 
+0.0,0.0, 1.0,0.0, 1.0,1.0, 0.0,1.0,
+0.0,0.0, 1.0,0.0, 1.0,1.0, 0.0,1.0,
+0.0,0.0, 1.0,0.0, 1.0,1.0, 0.0,1.0,
+0.0,0.0, 1.0,0.0, 1.0,1.0, 0.0,1.0
+};
+
+GLubyte SolidCube::cubeIndices[CUBE_INDICES]=
+{ 
+0,1,2,3, 
+4,5,6,7, 
+3,2,5,4, 
+7,6,1,0,
+8,9,10,11, 
+12,13,14,15 
+};
+
+
+void APIENTRY SolidCube::drawCube(GLuint texture)
 {
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	glBegin(GL_QUADS);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoords);
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
 
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(-size/2, -size/2, size/2);  // Bottom Left Of The Texture and Quad
-		glTexCoord2f(size/2, 0.0f); glVertex3f(size/2, -size/2, size/2);	// Bottom Right Of The Texture and Quad
-		glTexCoord2f(size/2, size/2); glVertex3f(size/2, size/2, size/2);		// Top Right Of The Texture and Quad
-		glTexCoord2f(0.0f, size/2); glVertex3f(-size/2, size/2, size/2);	// Top Left Of The Texture and Quad
-																	// Back Face
-		glTexCoord2f(size/2, 0.0f); glVertex3f(-size/2, -size/2, -size/2);  // Bottom Right Of The Texture and Quad
-		glTexCoord2f(size/2, size/2); glVertex3f(-size/2, size/2, -size/2);  // Top Right Of The Texture and Quad
-		glTexCoord2f(0.0f, size/2); glVertex3f(size/2, size/2, -size/2);	// Top Left Of The Texture and Quad
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(size/2, -size/2, -size/2);  // Bottom Left Of The Texture and Quad
-																   // Top Face
-		glTexCoord2f(0.0f, size/2); glVertex3f(-size/2, size/2, -size/2);  // Top Left Of The Texture and Quad
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(-size/2, size/2, size/2);  // Bottom Left Of The Texture and Quad
-		glTexCoord2f(size/2, 0.0f); glVertex3f(size/2, size/2, size/2);  // Bottom Right Of The Texture and Quad
-		glTexCoord2f(size/2, size/2); glVertex3f(size/2, size/2, -size/2);  // Top Right Of The Texture and Quad
-																  // Bottom Face
-		glTexCoord2f(size/2, size/2); glVertex3f(-size/2, -size/2, -size/2);  // Top Right Of The Texture and Quad
-		glTexCoord2f(0.0f, size/2); glVertex3f(size/2, -size/2, -size/2);  // Top Left Of The Texture and Quad
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(size/2, -size/2, size/2);  // Bottom Left Of The Texture and Quad
-		glTexCoord2f(size/2, 0.0f); glVertex3f(-size/2, -size/2, size/2);  // Bottom Right Of The Texture and Quad
-																   // Right face
-		glTexCoord2f(size/2, 0.0f); glVertex3f(size/2, -size/2, -size/2);  // Bottom Right Of The Texture and Quad
-		glTexCoord2f(size/2, size/2); glVertex3f(size/2, size/2, -size/2);  // Top Right Of The Texture and Quad
-		glTexCoord2f(0.0f, size/2); glVertex3f(size/2, size/2, size/2);  // Top Left Of The Texture and Quad
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(size/2, -size/2, size/2);  // Bottom Left Of The Texture and Quad
-																  // Left Face
-		glTexCoord2f(0.0f, 0.0f); glVertex3f(-size/2, -size/2, -size/2);  // Bottom Left Of The Texture and Quad
-		glTexCoord2f(size/2, 0.0f); glVertex3f(-size/2, -size/2, size/2);  // Bottom Right Of The Texture and Quad
-		glTexCoord2f(size/2, size/2); glVertex3f(-size/2, size/2, size/2);  // Top Right Of The Texture and Quad
-		glTexCoord2f(0.0f, size/2); glVertex3f(-size/2, size/2, -size/2);  // Top Left Of The Texture and Quad
-
-	glEnd();
-
+	glDrawElements(GL_QUADS, CUBE_INDICES, GL_UNSIGNED_BYTE, cubeIndices);
+	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisable(GL_TEXTURE_2D);
 }
-
