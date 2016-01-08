@@ -4,6 +4,7 @@
 #include "glut.h"
 #include "Config.h"
 #include "Scene.h"
+#include "ScoreBoard.h"
 #include "PacMan.h"
 #include "Ghost.h"
 #include "Pellet.h"
@@ -12,12 +13,13 @@
 using namespace std;
 
 Scene* scene;
+ScoreBoard* scoreBoard;
 PacMan* pacMan;
 Ghost** ghosts;
 int** Figure::map = Figure::createMap();
 Pellet*** Pellet::map = Pellet::createMap();
 GLuint textures[TEXTURES];
-int lifes=LIFES;
+int lives=LIVES;
 int oldTime=0;
 
 void drawScene();
@@ -107,11 +109,10 @@ void drawScoreBoard(GLsizei width, GLsizei height)
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glViewport(0, 0, width, SCOREBOARD_HEIGHT);
-		gluPerspective(60.0f, (float)width / (float)(SCOREBOARD_HEIGHT), 1.0f, 1000.0f);
+		gluOrtho2D(0, width, 0, SCOREBOARD_HEIGHT);
 		glMatrixMode(GL_MODELVIEW);
 		glScissor(0, 0, width, SCOREBOARD_HEIGHT);
 		glLoadIdentity();
-		setCamera();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		displayScoreBoard();
@@ -120,7 +121,8 @@ void drawScoreBoard(GLsizei width, GLsizei height)
 
 void displayScoreBoard()
 {
-
+	scoreBoard->displayScore(pacMan->getScore());
+	scoreBoard->displayLives(lives);
 }
 
 void processMoveKeys(int key, int xx, int yy)
@@ -158,7 +160,7 @@ void game(int passedTime)
 
 	if (collision)
 	{
-		lifes--;
+		lives--;
 		Sleep(RESPAWN_TIME);
 		setStartPositions();
 		collision = false;
@@ -167,7 +169,7 @@ void game(int passedTime)
 	if (passedTime <= DISPLAY_TIME)
 		Sleep(DISPLAY_TIME - passedTime);
 
-	if (lifes>0)
+	if (lives>0)
 	{
 		for (int i = 0; i < GHOSTS; i++)
 			ghosts[i]->randomMove();
@@ -213,7 +215,7 @@ void setStartPositions()
 
 void init()
 {
-	cout << "xs";
+	cout << "xssss";
 	GLfloat mat_ambient[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat light_position[] = { 0.0, 0.0, 10.0, 1.0 };
@@ -233,6 +235,7 @@ void init()
 	glEnable(GL_DEPTH_TEST);
 
 	scene = new Scene();
+	scoreBoard = new ScoreBoard();
 	initFigures();
 	LoadGlTextures();
 }
@@ -275,5 +278,6 @@ void deleteReferences()
 	delete[] ghosts;
 	delete pacMan;
 	delete scene;
+	delete scoreBoard;
 }
 

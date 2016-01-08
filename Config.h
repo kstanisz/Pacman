@@ -8,7 +8,7 @@
 #define RESPAWN_TIME 1000
 
 #define GHOSTS 4
-#define LIFES 3
+#define LIVES 3
 #define TEXTURES 4
 #define NORMAL_PELLET_VALUE 10
 #define EXTRA_PELLET_VALUE 15
