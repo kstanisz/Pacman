@@ -18,13 +18,35 @@ void ScoreBoard::drawText(string text, int x, int y,const GLfloat color[3])
 void ScoreBoard::displayScore(int score)
 {
 	this->score = score;
-	drawText("Score: "+intToString(score), 10, 10, scoreColor);
+	drawText("Score: "+intToString(score), 30, SCOREBOARD_HEIGHT/2-9, scoreColor);
 }
 
 void ScoreBoard::displayLives(int lives)
 {
 	this->lives = lives;
-	drawText("Lives: "+intToString(lives), 200, 10, scoreColor);
+	drawText("Lives: "+intToString(lives), 200, SCOREBOARD_HEIGHT/2-9, scoreColor);
+}
+
+void ScoreBoard::displayGameOverText()
+{
+	drawText("GAME OVER!", 350, SCOREBOARD_HEIGHT / 2 - 9, scoreColor);
+}
+
+void ScoreBoard::displayWinnerText()
+{
+	drawText("CONGRATULATION! YOU WIN!", 350, SCOREBOARD_HEIGHT / 2 - 9, scoreColor);
+}
+
+void ScoreBoard::displayPauseInfo(bool pause)
+{
+	if (pause)
+	{
+		drawText("Press Spacebar to START", 350, SCOREBOARD_HEIGHT / 2 - 9, scoreColor);
+	}
+	else
+	{
+		drawText("Press Spacebar to PAUSE", 350, SCOREBOARD_HEIGHT / 2 - 9, scoreColor);
+	}
 }
 
 string ScoreBoard::intToString(int value)

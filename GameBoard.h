@@ -1,5 +1,5 @@
-#ifndef SCENE_H
-#define SCENE_H
+#ifndef GAMEBOARD_H
+#define GAMEBOARD_H
 
 #include <windows.h>
 #include <iostream>
@@ -11,7 +11,7 @@
 #include "SolidCube.h"
 #include "Config.h"
 
-class Scene
+class GameBoard
 {
 private:
 
@@ -19,8 +19,8 @@ private:
 
 public:
 
-	Scene();
-	~Scene();
+	GameBoard();
+	~GameBoard();
 
 	void displayLabirynth(GLuint textures[TEXTURES]);
 	void readLabirynthFromFile();

@@ -27,6 +27,9 @@ public:
 	ScoreBoard();
 	void displayScore(int score);
 	void displayLives(int lives);
+	void displayGameOverText();
+	void displayWinnerText();
+	void displayPauseInfo(bool pause);
 };
 
 #endif

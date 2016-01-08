@@ -3,7 +3,7 @@
 #include <GL/gl.h>
 #include "glut.h"
 #include "Config.h"
-#include "Scene.h"
+#include "Gameboard.h"
 #include "ScoreBoard.h"
 #include "PacMan.h"
 #include "Ghost.h"
@@ -12,7 +12,7 @@
 
 using namespace std;
 
-Scene* scene;
+GameBoard* gameBoard;
 ScoreBoard* scoreBoard;
 PacMan* pacMan;
 Ghost** ghosts;
@@ -100,7 +100,7 @@ void setCamera()
 
 void displayGameBoard()
 {
-	scene->displayLabirynth(textures);
+	gameBoard->displayLabirynth(textures);
 	pacMan->display(textures[2 + (pacMan->isOpenJaw() ? 0 : 1)]);
 	for (int i = 0; i < GHOSTS; i++)
 		ghosts[i]->display();
@@ -269,7 +269,7 @@ void init()
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);
 
-	scene = new Scene();
+	gameBoard = new GameBoard();
 	scoreBoard = new ScoreBoard();
 	initFigures();
 	LoadGlTextures();
@@ -312,7 +312,7 @@ void deleteReferences()
 {
 	delete[] ghosts;
 	delete pacMan;
-	delete scene;
+	delete gameBoard;
 	delete scoreBoard;
 }
 

@@ -1,8 +1,8 @@
-#include "Scene.h"
+#include "GameBoard.h"
 
 using namespace std;
 
-Scene::Scene()
+GameBoard::GameBoard()
 {
 	labirynth = new int*[MAP_SIZE];
 	for (int i = 0; i < MAP_SIZE; i++)
@@ -11,13 +11,13 @@ Scene::Scene()
 	readLabirynthFromFile();
 }
 
-Scene::~Scene()
+GameBoard::~GameBoard()
 {
 	for (int i = 0; i < MAP_SIZE; i++)
 		delete[] labirynth[i];
 }
 
-void Scene::displayLabirynth(GLuint textures[TEXTURES])
+void GameBoard::displayLabirynth(GLuint textures[TEXTURES])
 {
 	GLfloat floorDiffuse[] = { 0.0, 2.5, 3.25, 1.0 };
 
@@ -47,7 +47,7 @@ void Scene::displayLabirynth(GLuint textures[TEXTURES])
 	glPopMatrix();
 }
 
-void Scene::readLabirynthFromFile()
+void GameBoard::readLabirynthFromFile()
 {
 	ifstream file("labirynth.txt");
 	if (file.is_open())
