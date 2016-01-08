@@ -2,6 +2,8 @@
 
 using namespace std;
 
+int Pellet::numberOfPellets = 0;
+
 Pellet::Pellet(){}
 
 Pellet::Pellet(PelletType type, int* positionOnMap)
@@ -64,6 +66,8 @@ void Pellet::display()
 
 Pellet*** Pellet::createMap()
 {
+	Pellet::numberOfPellets = 0;
+
 	Pellet*** map = new Pellet**[MAP_SIZE];
 	for (int i = 0; i < MAP_SIZE; i++)
 	{
@@ -92,14 +96,17 @@ Pellet*** Pellet::createMap()
 
 				case PelletType(NORMAL):
 					map[i][j] = new Pellet(PelletType(NORMAL),positionOnMap);
+					numberOfPellets++;
 					break;
 
 				case PelletType(EXTRA):
 					map[i][j] = new Pellet(PelletType(EXTRA),positionOnMap);
+					numberOfPellets++;
 					break;
 
 				case PelletType(POWER):
 					map[i][j] = new Pellet(PelletType(POWER),positionOnMap);
+					numberOfPellets++;
 					break;
 				}
 			}
@@ -120,8 +127,14 @@ int Pellet::collectPelletFromMap(int* positionOnMap)
 	{
 		int value = map[positionOnMap[0]][positionOnMap[1]]->getValue();
 		map[positionOnMap[0]][positionOnMap[1]] = NULL;
+		numberOfPellets--;
 		return value;
 	}
 
 	return 0;
+}
+
+bool Pellet::isAllCollected()
+{
+	return (numberOfPellets == 0);
 }

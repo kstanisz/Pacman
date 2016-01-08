@@ -15,17 +15,20 @@ private:
 	PelletType type;
 	int value;
 	static Pellet*** map;
+	
 	int* positionOnMap;
 
 public:
 
 	Pellet();
 	Pellet(PelletType type,int* positionOnMap);
+	static int numberOfPellets;
 	int getValue();
 	void display();
 	static Pellet*** createMap();
 	static Pellet*** getMap();
 	static int collectPelletFromMap(int* positionOnMap);
+	static bool isAllCollected();
 };
 
 #endif

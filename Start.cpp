@@ -21,6 +21,7 @@ Pellet*** Pellet::map = Pellet::createMap();
 GLuint textures[TEXTURES];
 int lives=LIVES;
 int oldTime=0;
+bool pause = true;
 
 void drawScene();
 void drawGameBoard(GLsizei width, GLsizei height);
@@ -28,7 +29,9 @@ void setCamera();
 void displayGameBoard();
 void drawScoreBoard(GLsizei width, GLsizei height);
 void displayScoreBoard();
+void reshapeWindow(int x, int y);
 void processMoveKeys(int key, int xx, int yy);
+void keyPressed(unsigned char key, int x, int y);
 void idle();
 void game(int passedTime);
 void setStartPositions();
@@ -44,11 +47,12 @@ int main(int argc, char** argv)
 	glutInitWindowPosition(WINDOW_POSITION, WINDOW_POSITION);
 	glutInitWindowSize(WINDOW_SIZE, WINDOW_SIZE);
 
-	glutCreateWindow("PAC-MANa");
+	glutCreateWindow("PAC-MAN");
 
 	glutDisplayFunc(drawScene);
-	//glutReshapeFunc(drawScene);
+	glutReshapeFunc(reshapeWindow);
 	glutSpecialFunc(processMoveKeys);
+	glutKeyboardFunc(keyPressed);
 	glutIdleFunc(idle);
 
 	init();
@@ -69,7 +73,7 @@ void drawScene()
 
 void drawGameBoard(GLsizei width, GLsizei height)
 {
-	if (height > 0 && width > 0)
+	if (height >0 && width >0)
 	{
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -104,7 +108,7 @@ void displayGameBoard()
 
 void drawScoreBoard(GLsizei width, GLsizei height)
 {
-	if (height > 0 && width > 0)
+	if (height >0 && width >0)
 	{
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -123,6 +127,24 @@ void displayScoreBoard()
 {
 	scoreBoard->displayScore(pacMan->getScore());
 	scoreBoard->displayLives(lives);
+	if (lives == 0)
+		scoreBoard->displayGameOverText();
+	else if (Pellet::isAllCollected())
+		scoreBoard->displayWinnerText();
+	else
+		scoreBoard->displayPauseInfo(pause);
+}
+
+void reshapeWindow(int x, int y)
+{
+	if (x < WINDOW_SIZE && y < WINDOW_SIZE)
+		glutReshapeWindow(WINDOW_SIZE, WINDOW_SIZE);
+	else if(x<WINDOW_SIZE)
+		glutReshapeWindow(WINDOW_SIZE, y);
+	else if (y<WINDOW_SIZE)
+		glutReshapeWindow(x, WINDOW_SIZE);
+	else
+		glutReshapeWindow(x, y);
 }
 
 void processMoveKeys(int key, int xx, int yy)
@@ -145,12 +167,25 @@ void processMoveKeys(int key, int xx, int yy)
 	}
 }
 
+void keyPressed(unsigned char key, int x, int y) 
+{
+	switch (key)
+	{
+		case KEY_SPACE_BAR:
+			pause = pause ? false : true;
+			break;
+	}
+}
+
 void idle()
 {
 	int elapsedTime = glutGet(GLUT_ELAPSED_TIME);
 	int passedTime = elapsedTime - oldTime;
 	oldTime = elapsedTime;
-	game(passedTime);
+	
+	if(!pause)
+		game(passedTime);
+
 	glutPostRedisplay();
 }
 
@@ -215,7 +250,7 @@ void setStartPositions()
 
 void init()
 {
-	cout << "xssss";
+	cout << "xsSSddddDesddsss";
 	GLfloat mat_ambient[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat light_position[] = { 0.0, 0.0, 10.0, 1.0 };

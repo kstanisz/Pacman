@@ -1,11 +1,13 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define WINDOW_SIZE 500
+#define WINDOW_SIZE 700
 #define WINDOW_POSITION 0
 #define SCOREBOARD_HEIGHT 50
 #define DISPLAY_TIME 70
 #define RESPAWN_TIME 1000
+
+#define KEY_SPACE_BAR 32
 
 #define GHOSTS 4
 #define LIVES 3
