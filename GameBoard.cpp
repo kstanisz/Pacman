@@ -31,8 +31,10 @@ void GameBoard::displayLabirynth(GLuint textures[TEXTURES])
 				if (labirynth[i][j] == 1)
 				{
 					glPushMatrix();
-						glTranslatef(j*WALL_BRICK_SIZE, 0.0, i*WALL_BRICK_SIZE);
-						SolidCube::drawCube(WALL_BRICK_SIZE, textures[0]);
+						
+						glTranslatef(j*WALL_BRICK_SIZE,-WALL_BRICK_SIZE/2, i*WALL_BRICK_SIZE);
+						glScalef(WALL_BRICK_SIZE,WALL_BRICK_SIZE,WALL_BRICK_SIZE);
+						SolidCube::drawCube(textures[0]);
 					glPopMatrix();
 				}
 				else if(map[i][j]!=NULL)
@@ -40,8 +42,9 @@ void GameBoard::displayLabirynth(GLuint textures[TEXTURES])
 				
 				glPushMatrix();
 					glMaterialfv(GL_FRONT, GL_DIFFUSE, floorDiffuse);
-					glTranslatef(j*WALL_BRICK_SIZE, -0.25, i*WALL_BRICK_SIZE);
-					SolidCube::drawCube(WALL_BRICK_SIZE, textures[1]);
+					glTranslatef(j*WALL_BRICK_SIZE, -WALL_BRICK_SIZE, i*WALL_BRICK_SIZE);
+					glScalef(WALL_BRICK_SIZE, WALL_BRICK_SIZE, WALL_BRICK_SIZE);
+					SolidCube::drawCube(textures[1]);
 				glPopMatrix();
 			}
 	glPopMatrix();

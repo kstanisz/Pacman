@@ -5,6 +5,7 @@
 #include "Config.h"
 #include "Gameboard.h"
 #include "ScoreBoard.h"
+#include "Camera.h"
 #include "PacMan.h"
 #include "Ghost.h"
 #include "Pellet.h"
@@ -14,6 +15,7 @@ using namespace std;
 
 GameBoard* gameBoard;
 ScoreBoard* scoreBoard;
+Camera* camera;
 PacMan* pacMan;
 Ghost** ghosts;
 
@@ -25,7 +27,6 @@ bool pause;
 
 void drawScene();
 void drawGameBoard(GLsizei width, GLsizei height);
-void setCamera();
 void displayGameBoard();
 void drawScoreBoard(GLsizei width, GLsizei height);
 void displayScoreBoard();
@@ -83,20 +84,11 @@ void drawGameBoard(GLsizei width, GLsizei height)
 		glMatrixMode(GL_MODELVIEW);
 		glScissor(0, SCOREBOARD_HEIGHT, width, height - SCOREBOARD_HEIGHT);
 		glLoadIdentity();
-		setCamera();
+		camera->setCamera(pacMan->getPositionOnScene());
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		displayGameBoard();
 	}
-}
-
-void setCamera()
-{
-	float* pacManPosition = pacMan->getPositionOnScene();
-
-	gluLookAt(pacManPosition[Dimension(X)], CAMERA_Y, pacManPosition[Dimension(Z)] + CAMERA_Z,
-		pacManPosition[Dimension(X)], pacManPosition[Dimension(Y)], pacManPosition[Dimension(Z)],
-		0.0f, 1.0f, 0.0f);
 }
 
 void displayGameBoard()
@@ -185,6 +177,14 @@ void keyPressed(unsigned char key, int x, int y)
 			else
 				pause = pause ? false : true;
 			break;
+		
+		case 'a':
+			camera->zoomIn();
+			break;
+
+		case 'z':
+			camera->zoomOut();
+			break;
 	}
 }
 
@@ -261,7 +261,7 @@ void setStartPositions()
 
 void init()
 {
-	cout << "xsSSddDddDdfdDSesDSeddsss";
+	cout << "xsSSddDddDdfdDddSesDSeddsss";
 	GLfloat mat_ambient[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat light_position[] = { 0.0, 0.0, 10.0, 1.0 };
@@ -292,6 +292,7 @@ void startGame()
 	Pellet::createMap();
 	gameBoard = new GameBoard();
 	scoreBoard = new ScoreBoard();
+	camera = new Camera();
 	initFigures();
 }
 
@@ -334,5 +335,6 @@ void deleteReferences()
 	delete pacMan;
 	delete gameBoard;
 	delete scoreBoard;
+	delete camera;
 }
 
