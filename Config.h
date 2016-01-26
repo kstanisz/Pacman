@@ -12,7 +12,7 @@
 
 #define GHOSTS 4
 #define LIVES 3
-#define TEXTURES 5
+#define TEXTURES 6
 #define NORMAL_PELLET_VALUE 10
 #define EXTRA_PELLET_VALUE 15
 #define POWER_PELLET_VALUE 30

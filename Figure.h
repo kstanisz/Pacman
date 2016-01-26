@@ -36,7 +36,7 @@ public:
 
 	static int** createMap();
 
-	//virtual void display() = 0;
+	void display(GLuint texture);
 };
 
 #endif

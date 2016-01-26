@@ -36,9 +36,9 @@ int Pellet::getValue()
 
 void Pellet::display()
 {
-	GLfloat pelletNormalDiffuse[] = { 0.2, 0.0, 0.2, 1.0 };
-	GLfloat pelletExtraDiffuse[] = { 0.2, 0.4, 0.2, 1.0 };
-	GLfloat pelletPowerDiffuse[] = { 0.8, 0.1, 0.8, 1.0 };
+	GLfloat pelletNormalDiffuse[] = { 0.2f, 0.0f, 0.2f, 1.0f };
+	GLfloat pelletExtraDiffuse[] = { 0.2f, 0.4f, 0.2f, 1.0f };
+	GLfloat pelletPowerDiffuse[] = { 0.8f, 0.1f, 0.8f, 1.0f};
 	switch (type)
 	{
 	case PelletType(NORMAL):
@@ -61,7 +61,7 @@ void Pellet::display()
 		glPushMatrix();
 		glMaterialfv(GL_FRONT, GL_DIFFUSE, pelletPowerDiffuse);
 		glTranslatef(positionOnMap[1] * WALL_BRICK_SIZE, 0.1 / 2, positionOnMap[0] * WALL_BRICK_SIZE);
-		glutSolidSphere(0.1, 8, 8);
+		glutSolidTeapot(0.1);
 		glPopMatrix();
 
 		break;

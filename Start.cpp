@@ -98,7 +98,7 @@ void displayGameBoard()
 	
 	pacMan->display(textures[2 + (pacMan->isOpenJaw() ? 0 : 1)]);
 	for (int i = 0; i < GHOSTS; i++)
-		ghosts[i]->display();
+		ghosts[i]->display(textures[5]);
 }
 
 void drawScoreBoard(GLsizei width, GLsizei height)
@@ -305,7 +305,7 @@ void initFigures()
 
 int LoadGlTextures()
 {
-	string fileName[] = { "Textures/grass.bmp", "Textures/soil.bmp","Textures/pacmanOpen.bmp","Textures/pacmanClose.bmp","Textures/stars.bmp"};
+	string fileName[] = { "Textures/grass.bmp", "Textures/soil.bmp","Textures/pacmanOpen.bmp","Textures/pacmanClose.bmp","Textures/stars.bmp","Textures/ghost.bmp" };
 	
 	for (int i = 0; i < TEXTURES; i++)
 	{

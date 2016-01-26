@@ -11,7 +11,6 @@ public:
 	Ghost();
 	Ghost(int* positionOnMap);
 
-	void display();
 	void randomMove();
 };
 #endif

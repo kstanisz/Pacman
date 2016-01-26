@@ -15,17 +15,6 @@ Ghost::Ghost(int* positionOnMap) : Figure(positionOnMap)
 
 }
 
-void Ghost::display()
-{
-	GLfloat pacManDiffuse[] = { 0.3, 0.0, 0.3, 1.0 };
-
-	glPushMatrix();
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, pacManDiffuse);
-	glTranslatef(positionOnScene[Dimension(X)], positionOnScene[Dimension(Y)], positionOnScene[Dimension(Z)]);
-	glutSolidSphere(0.25, 50, 50);
-	glPopMatrix();
-}
-
 void Ghost::randomMove()
 {
 	vector<Direction> possibleDirections;

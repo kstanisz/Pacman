@@ -26,7 +26,6 @@ public:
 	int getScore();
 	void collect();
 	bool isCollision(Ghost** ghosts);
-	void display(GLuint texture);
 };
 
 #endif

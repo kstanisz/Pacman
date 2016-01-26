@@ -140,6 +140,24 @@ void Figure::move(Direction direction)
 	}
 }
 
+void Figure::display(GLuint texture)
+{
+	glPushMatrix();
+	glTranslatef(positionOnScene[Dimension(X)], positionOnScene[Dimension(Y)], positionOnScene[Dimension(Z)]);
+	glRotatef(90.0f*direction, 0.0f, 1.0f, 0.0f);
+	glRotatef(-110.0f, 1.0f, 0.0f, 0.0f);
+
+	GLUquadricObj *qObj = gluNewQuadric();
+	gluQuadricTexture(qObj, GL_TRUE);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	gluSphere(qObj, 0.25f, 30, 30);
+	glDisable(GL_TEXTURE_2D);
+
+	glPopMatrix();
+}
+
 int** Figure::createMap()
 {
 	int** map = new int*[MAP_SIZE];
