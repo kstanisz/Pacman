@@ -23,6 +23,7 @@ public:
 	~GameBoard();
 
 	void displayLabirynth(GLuint textures[TEXTURES]);
+	void displaySkyBox(GLuint texture);
 	void readLabirynthFromFile();
 };
 

@@ -50,6 +50,93 @@ void GameBoard::displayLabirynth(GLuint textures[TEXTURES])
 	glPopMatrix();
 }
 
+void GameBoard::displaySkyBox(GLuint texture)
+{
+	
+	glDisable(GL_LIGHTING); 
+	glDisable(GL_DEPTH_TEST);       
+	glEnable(GL_TEXTURE_2D);     
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glPushMatrix();
+	glTranslatef(0.0f, 12.5f, 0.0f);
+
+	glBegin(GL_QUADS);      
+	glTexCoord2f(0, 0);      
+	glVertex3f(SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);      
+	glTexCoord2f(1, 0);   
+	glVertex3f(-SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);
+	glTexCoord2f(1, 1);
+	glVertex3f(-SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glBegin(GL_QUADS);
+	//left face
+	glTexCoord2f(0, 0);
+	glVertex3f(-SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);
+	glTexCoord2f(1, 0);
+	glVertex3f(-SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glTexCoord2f(1, 1);
+	glVertex3f(-SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(-SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glBegin(GL_QUADS);
+	//front face
+	glTexCoord2f(1, 0);
+	glVertex3f(SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glTexCoord2f(0, 0);
+	glVertex3f(-SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(-SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glTexCoord2f(1, 1);
+	glVertex3f(SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glBegin(GL_QUADS);
+	//right face
+	glTexCoord2f(0, 0);
+	glVertex3f(SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glTexCoord2f(1, 0);
+	glVertex3f(SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);
+	glTexCoord2f(1, 1);
+	glVertex3f(SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glBegin(GL_QUADS);                      //top face
+	glTexCoord2f(1, 0);
+	glVertex3f(SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);
+	glTexCoord2f(0, 0);
+	glVertex3f(-SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(-SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glTexCoord2f(1, 1);
+	glVertex3f(SKYBOX_SIZE / 2, SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glBegin(GL_QUADS);
+	//bottom face
+	glTexCoord2f(1, 1);
+	glVertex3f(SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);
+	glTexCoord2f(0, 1);
+	glVertex3f(-SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, SKYBOX_SIZE / 2);
+	glTexCoord2f(0, 0);
+	glVertex3f(-SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glTexCoord2f(1, 0);
+	glVertex3f(SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2, -SKYBOX_SIZE / 2);
+	glEnd();
+
+	glPopMatrix();
+	glEnable(GL_LIGHTING);  //turn everything back, which we turned on, and turn everything off, which we have turned on.
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_TEXTURE_2D);
+}
+
 void GameBoard::readLabirynthFromFile()
 {
 	ifstream file("labirynth.txt");

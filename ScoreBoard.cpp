@@ -14,6 +14,8 @@ void ScoreBoard::drawText(string text, int x, int y,const GLfloat color[3])
 		char c = *i;
 		glutBitmapCharacter(font, c);
 	}
+
+	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
 void ScoreBoard::displayScore(int score)

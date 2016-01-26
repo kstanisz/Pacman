@@ -210,8 +210,7 @@ void PacMan::collect()
 
 void PacMan::display(GLuint texture)
 {
-	GLfloat pacManDiffuse[] = { 0.9, 0.0, 0.9, 1.0 };
-
+	//glDisable(GL_LIGHTING);
 	glPushMatrix();
 
 		glTranslatef(positionOnScene[Dimension(X)], positionOnScene[Dimension(Y)], positionOnScene[Dimension(Z)]);
@@ -219,7 +218,6 @@ void PacMan::display(GLuint texture)
 		glRotatef(-110.0f, 1.0f, 0.0f, 0.0f);
 
 		GLUquadricObj *qObj = gluNewQuadric();	
-		//gluQuadricNormals(qObj, GLU_SMOOTH);
 		gluQuadricTexture(qObj, GL_TRUE);
 		
 		glEnable(GL_TEXTURE_2D);
@@ -228,4 +226,5 @@ void PacMan::display(GLuint texture)
 		glDisable(GL_TEXTURE_2D);
 
 	glPopMatrix();
+	//glEnable(GL_LIGHTING);
 }

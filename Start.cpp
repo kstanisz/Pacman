@@ -93,7 +93,9 @@ void drawGameBoard(GLsizei width, GLsizei height)
 
 void displayGameBoard()
 {
+	gameBoard->displaySkyBox(textures[4]);
 	gameBoard->displayLabirynth(textures);
+	
 	pacMan->display(textures[2 + (pacMan->isOpenJaw() ? 0 : 1)]);
 	for (int i = 0; i < GHOSTS; i++)
 		ghosts[i]->display();
@@ -224,10 +226,6 @@ void game(int passedTime)
 		if (pacMan->isCollision(ghosts))
 			collision = true;
 	}
-	else
-	{
-		cout << pacMan->getScore() << endl;
-	}
 }
 
 void setStartPositions()
@@ -261,7 +259,6 @@ void setStartPositions()
 
 void init()
 {
-	cout << "xsSSddDddDdfdDddSesDSeddsss";
 	GLfloat mat_ambient[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0,  1.0, 1.0 };
 	GLfloat light_position[] = { 0.0, 0.0, 10.0, 1.0 };
@@ -308,7 +305,7 @@ void initFigures()
 
 int LoadGlTextures()
 {
-	string fileName[] = { "Textures/grass.bmp", "Textures/soil.bmp","Textures/pacmanOpen.bmp","Textures/pacmanClose.bmp"};
+	string fileName[] = { "Textures/grass.bmp", "Textures/soil.bmp","Textures/pacmanOpen.bmp","Textures/pacmanClose.bmp","Textures/stars.bmp"};
 	
 	for (int i = 0; i < TEXTURES; i++)
 	{
